@@ -1,8 +1,0 @@
-%(asctime)s - %(levelname)s - %(message)s
-2020-02-04 12:37:51,842 - DEBUG - This is a debug log.
-2020-02-04 12:37:51,843 - INFO - This is a info log.
-2020-02-04 12:37:51,843 - WARNING - This is a warning log.
-2020-02-04 12:37:51,844 - ERROR - This is a error log.
-2020-02-04 12:37:51,845 - CRITICAL - This is a critical log.
-2020-02-04 12:37:51,896 - DEBUG - Starting new HTTPS connection (1): ncov.dxy.cn:443
-2020-02-04 12:37:52,022 - DEBUG - https://ncov.dxy.cn:443 "GET /ncovh5/view/pneumonia HTTP/1.1" 200 None
