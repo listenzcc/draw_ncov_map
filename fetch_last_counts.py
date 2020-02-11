@@ -7,10 +7,9 @@ import os
 import time
 import json
 import logging
-import requests
 import pandas as pd
-from bs4 import BeautifulSoup
-from profiles import profiles, getTimeStamp, getAreaStat
+from local_profiles import profiles
+from local_toolbox import getRemoteText, getTimeStamp, getAreaStat
 
 logging.info('Start fetch last counts.')
 
@@ -24,11 +23,8 @@ def fetch():
     yield:
         Will write json file as JSON_FILENAME
     """
-    # Request from internet
-    response = requests.get(profiles.remote_url)
-    HTML = response.text.encode(response.encoding).decode()
-    soup = BeautifulSoup(HTML, features='lxml')
-    text = soup.contents[1].text
+    # Get remote text
+    text = getRemoteText()
 
     # Get timeStamp
     try:

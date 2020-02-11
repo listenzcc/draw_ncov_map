@@ -2,8 +2,10 @@ import os
 import logging
 import pandas as pd
 from pprint import pprint
-from profiles import profiles
+from local_profiles import profiles
+from local_toolbox import readDF, safeGet
 import fetch_last_counts
+
 
 class INV_MANAGER():
     """
@@ -27,29 +29,6 @@ class INV_MANAGER():
         logging.info('List count files.')
         pprint(self.COUNT_FILE_DF)
 
-    def _save_loc(self, key, method='loc'):
-        """
-        Builtin method to fetch entry from self.COUNT_FILE_DF as key using loc or iloc.
-        inputs:
-            key: key to fetch
-            method: loc or iloc
-        outputs:
-            obj: the DataFrame being fetched
-        """
-        # Get df
-        df = self.COUNT_FILE_DF
-        # Get obj
-        if method == 'loc':
-            obj = df.loc[key]
-        else:
-            obj = df.iloc[key]
-        # Transfrom Series into DataFrame
-        if isinstance(obj, pd.Series):
-            return pd.DataFrame(obj).T
-        else:
-            return obj
-
-
     def get_count_file_on_date(self, date):
         """
         Get count file(s) of date.
@@ -58,17 +37,10 @@ class INV_MANAGER():
         outputs:
             df_date: DataFrame of file info, None if not found
         """
-        df_date = None 
-        try:
-            df_date = self._save_loc(date, method='loc') # df.loc[date]
-            logging.info(f'Records found on date {date}.')
-            logging.info(df_date)
-        except KeyError as error:
-            err = repr(error)
-            logging.error(err)
-            print(err)
-        finally:
-            return df_date
+        df_date = safeGet(self.COUNT_FILE_DF, date, method='loc')
+        logging.info(f'Records found on date {date}.')
+        logging.info(df_date)
+        return df_date
 
     def get_count_file_on_idx(self, idx):
         """
@@ -78,17 +50,10 @@ class INV_MANAGER():
         outputs:
             df_idx: DataFrame of file info, None if not found
         """
-        df_idx = None
-        try:
-            df_idx = self._save_loc(idx, method='iloc') # df.iloc[idx]
-            logging.info('Record found.')
-            logging.info(df_idx)
-        except IndexError as error:
-            err = repr(error)
-            logging.error(err)
-            print(err)
-        finally:
-            return df_idx
+        df_idx = safeGet(self.COUNT_FILE_DF, idx, method='iloc')
+        logging.info(f'Record found on {idx}.')
+        logging.info(df_idx)
+        return df_idx
 
     def _update_inventory(self):
         """
@@ -96,6 +61,7 @@ class INV_MANAGER():
         """
         # fetch lastest counting
         fetch_last_counts.fetch()
+        self._check_inventory()
 
     def _check_inventory(self):
         """
@@ -118,6 +84,13 @@ class INV_MANAGER():
         self.COUNT_FILE_DF = df.set_index('date', drop=False)
 
 
+def printer(df):
+    if df is not None:
+        pprint(readDF(df['path'].values[-1]))
+    else:
+        print('No record selected.')
+
+
 if __name__ == '__main__':
     manager = INV_MANAGER()
     s = ''
@@ -131,8 +104,7 @@ if __name__ == '__main__':
             manager._update_inventory()
         if s == 'p':
             # Print selected
-            if df is not None:
-                pprint(pd.read_json(df['path'].values[0]))
+            printer(df)
         if s.startswith('d'):
             # Get entries on data
             df = manager.get_count_file_on_date(s.split()[1])
