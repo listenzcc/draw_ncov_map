@@ -54,8 +54,11 @@ class MAPPER_SERVER():
         """
         if name in self.memory.index:
             lat = self.memory.loc[name].latitude
-            lng = self.memory.log[name].longtitude
+            lng = self.memory.loc[name].longitude
         else:
+            message = f'Search online: {name}.'
+            print(message)
+            logging.info(message)
             try:
                 g = geocoder.baidu(name, key=profiles.baidu_ak)
                 lat, lng = g.latlng
@@ -69,3 +72,18 @@ class MAPPER_SERVER():
                 print(f'Error occured on checkout {name}: {message}')
                 logging.error(message)
         return lat, lng
+
+
+if __name__ == '__main__':
+    ms = MAPPER_SERVER()
+    s = 'l'
+    while not s == 'q':
+        if s == 'l':
+            print(ms.memory)
+        if s == 'r':
+            ms._read_memory()
+            print(ms.memory)
+        if s not in ['l', 'r']:
+            print(ms.checkout(s))
+        s = input('>> ')
+    ms.solid_memory()
