@@ -141,7 +141,7 @@ def setup_traces(country_df, countryName, provinces_df, provinceNames, colorscal
     log_confirmedCount = np.log10(provinces_df.confirmedCount.values + 1)
     cmax, cmin = log_confirmedCount.max(), log_confirmedCount.min()
     for prov in provinceNames:
-        print(prov, end=', ')
+        # print(prov, end=', ')
 
         # fetch cities
         cities = provinces_df.loc[prov]
@@ -214,7 +214,7 @@ def setup_traces(country_df, countryName, provinces_df, provinceNames, colorscal
         visible=True,
     )
 
-    print('done.')
+    # print('done.')
     return scatter_traces, bar_traces, table_traces, country_name
 
 
@@ -263,7 +263,7 @@ def setup_buttons(provinceNames, countryName, scatter_traces, country_name):
                   {'title': title}]
         ))
 
-    print('Done.')
+    # print('Done.')
     return buttons
 
 
@@ -291,22 +291,22 @@ def draw_plotly(scatter_traces, bar_traces, table_traces, buttons, provinceNames
     # order can not be changed
     # add scatters
     for prov in provinceNames:
-        print(prov, end=', ')
+        # print(prov, end=', ')
         fig.add_trace(scatter_traces[prov], row=1, col=1)
     # add bars
     for prov in provinceNames:
-        print(prov, end=', ')
+        # print(prov, end=', ')
         fig.add_trace(bar_traces[prov], row=1, col=2)
     # add tables
     for prov in provinceNames:
-        print(prov, end=', ')
+        # print(prov, end=', ')
         fig.add_trace(table_traces[prov], row=2, col=1)
     # add global bar
     fig.add_trace(bar_traces[countryName], row=1, col=2)
     # add global table
     fig.add_trace(table_traces[countryName], row=2, col=1)
 
-    print('done.')
+    # print('done.')
 
     fig.update_mapboxes(
         accesstoken=profiles.mapbox_ak,
