@@ -9,6 +9,7 @@ import pandas as pd
 from local_profiles import profiles
 from mapper_server import MAPPER_SERVER
 
+from _plotly_future_ import remove_deprecations
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go

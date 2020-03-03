@@ -77,8 +77,13 @@ class INV_MANAGER():
             logging.info(f'Found ncov_counts file {name}.')
             date = name[len('ncov_counts_'):len('ncov_counts_')+8]
             path = os.path.join(self.DIR, name)
+            
+            inside = pd.read_json(path)
+            sum_confirmedCount = inside['confirmedCount'].sum().astype(int)
+
             se = pd.Series(data={'date': date,
-                                 'path': path})
+                                 'path': path,
+                                 'sum': sum_confirmedCount})
             df = df.append(se, ignore_index=True)
 
         self.COUNT_FILE_DF = df.set_index('date', drop=False)

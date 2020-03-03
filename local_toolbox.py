@@ -19,11 +19,11 @@ def safeGet(df, key, method='loc'):
         method: 'loc' or 'iloc'
     outputs:
         Fetched entry in format of DataFrame,
-        None if error occured
+        None if error occurred
     """
     # Regularize method
     if method not in ['loc', 'iloc']:
-        logging.warning(f"Illigal method {method} found, use 'loc' instead.")
+        logging.warning(f"Illegal method {method} found, use 'loc' instead.")
         method = 'loc'
     # Get entry of key
     try:
@@ -49,7 +49,7 @@ def readDF(path):
     inputs:
         path: path of json file
     outputs:
-        df: DataFrame of path, None if error occured
+        df: DataFrame of path, None if error occurred
     """
     if not os.path.exists(path):
         err = FileNotFoundError(path)

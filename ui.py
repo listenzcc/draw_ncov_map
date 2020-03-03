@@ -2,11 +2,20 @@
 Main ui of the project.
 """
 
+import time
+
+t = time.time()
+
 from local_profiles import profiles
+print('{} seconds passed'.format(time.time() - t))
 from local_toolbox import readDF
+print('{} seconds passed'.format(time.time() - t))
 from inventory_manager import INV_MANAGER
+print('{} seconds passed'.format(time.time() - t))
 from painter import PAINTER
+print('{} seconds passed'.format(time.time() - t))
 from pprint import pprint
+print('{} seconds passed'.format(time.time() - t))
 
 manager = INV_MANAGER()
 painter = PAINTER()
