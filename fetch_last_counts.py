@@ -34,6 +34,7 @@ def fetch():
         timeStamp = time.time()
         logging.warning(
             'TimeStamp can not be read from response. Using current timeStamp instead.')
+        print('TimeStamp can not be read from response, Using current timestamp instead. So DO NOT UPDATE again.')
     logging.info(f'TimeStamp is {timeStamp}.')
 
     # Get counting
