@@ -4,7 +4,7 @@ Profiles of the project.
 
 import os
 import logging
-from local_profiles import BAIDU_AK, MAPBOX_ACCESS_TOKEN
+from key_profiles import BAIDU_AK, MAPBOX_ACCESS_TOKEN
 
 REMOTE_URL = 'https://ncov.dxy.cn/ncovh5/view/pneumonia'
 inventory_dir = 'ncov_inventory'
