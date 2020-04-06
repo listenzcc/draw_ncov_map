@@ -4,10 +4,9 @@ Profiles of the project.
 
 import os
 import logging
+from local_profiles import BAIDU_AK, MAPBOX_ACCESS_TOKEN
 
 REMOTE_URL = 'https://ncov.dxy.cn/ncovh5/view/pneumonia'
-BAIDU_AK = '62c28637e66010289bdef04310267902'
-MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoibGlzdGVuemNjIiwiYSI6ImNrMzU5MmpxZDAxMXEzbXQ0dnd4YTZ2NDAifQ.GohcgYXFsbDqfsi_7SXdpA'
 inventory_dir = 'ncov_inventory'
 mapper_server_dir = 'maper_server_memory'
 
