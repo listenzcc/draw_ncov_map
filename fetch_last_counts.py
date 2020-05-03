@@ -8,6 +8,7 @@ import time
 import json
 import logging
 import pandas as pd
+import traceback
 from local_profiles import profiles
 from local_toolbox import getRemoteText, getTimeStamp, getAreaStat
 
@@ -38,7 +39,13 @@ def fetch():
     logging.info(f'TimeStamp is {timeStamp}.')
 
     # Get counting
-    counting_json = json.loads(getAreaStat(text))
+    # todo: Something is wrong with the remote url feeding
+    try:
+        counting_json = json.loads(getAreaStat(text))
+    except Exception as err:
+        traceback.print_exc()
+        print(text)
+        raise(err)
 
     # Make counting_df
     counting_df = pd.read_json(json.dumps(counting_json))
