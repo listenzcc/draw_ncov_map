@@ -93,9 +93,9 @@ class PAINTER():
 
     def draw(self):
         draw(self.country_df,
-        self.countryName,
-        self.provinces_df,
-        self.provinceNames)
+             self.countryName,
+             self.provinces_df,
+             self.provinceNames)
 
 
 colorscale = px.colors.carto.Redor
@@ -105,12 +105,14 @@ size = 9
 
 def draw(country_df, countryName, provinces_df, provinceNames, colorscale=colorscale, showscale=showscale, size=size):
 
-    scatter_traces, bar_traces, table_traces, country_name = setup_traces(country_df, countryName, provinces_df, provinceNames)
+    scatter_traces, bar_traces, table_traces, country_name = setup_traces(
+        country_df, countryName, provinces_df, provinceNames)
 
-    buttons = setup_buttons(provinceNames, countryName, scatter_traces, country_name)
+    buttons = setup_buttons(provinceNames, countryName,
+                            scatter_traces, country_name)
 
-    draw_plotly(scatter_traces, bar_traces, table_traces, buttons, provinceNames, provinces_df, countryName, country_name)
-
+    draw_plotly(scatter_traces, bar_traces, table_traces, buttons,
+                provinceNames, provinces_df, countryName, country_name)
 
 
 def setup_traces(country_df, countryName, provinces_df, provinceNames, colorscale=colorscale, showscale=showscale, size=size):
@@ -133,7 +135,8 @@ def setup_traces(country_df, countryName, provinces_df, provinceNames, colorscal
     scatter_traces = dict()
     bar_traces = dict()
     table_traces = dict()
-    country_name = '{} {}例'.format(countryName, country_df.confirmedCount.sum())
+    country_name = '{} {}例'.format(
+        countryName, country_df.confirmedCount.sum())
 
     # for each province
     # 1. fetch its cities
@@ -253,6 +256,9 @@ def setup_buttons(provinceNames, countryName, scatter_traces, country_name):
     ))
 
     # Add button for each province
+    # The buttons update the 'visible' and 'title' properties of the global figure,
+    # the change will be valid immediately,
+    # thus user can change the display by clicking the button.
     for prov in provinceNames:
         visible = one_hot(prov) * 3 + [False, False]
         title = scatter_traces[prov].name
@@ -286,7 +292,7 @@ def draw_plotly(scatter_traces, bar_traces, table_traces, buttons, provinceNames
         rows=2, cols=2,
         shared_xaxes=False,
         specs=[[{"type": "mapbox"}, {"type": "bar"}],
-            [{"type": "table", "colspan":2}, None]]
+               [{"type": "table", "colspan": 2}, None]]
     )
 
     # order can not be changed
@@ -334,7 +340,7 @@ def draw_plotly(scatter_traces, bar_traces, table_traces, buttons, provinceNames
 
     fig.update_yaxes(type="log")
     fig.update_layout(yaxis={'title_text': 'Count in log',
-                            'title_standoff': 0})
-    fig.layout.update({'height':800})
+                             'title_standoff': 0})
+    fig.layout.update({'height': 800})
     fig.write_html(HTML_FILENAME)
     fig.show()
